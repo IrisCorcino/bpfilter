@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Sun Apr 22 21:50:15 2018
+# Generated: Sun Apr 22 22:03:04 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -95,6 +95,49 @@ class top_block(gr.top_block, Qt.QWidget):
         self.rtlsdr_source_0.set_antenna('', 0)
         self.rtlsdr_source_0.set_bandwidth(0, 0)
 
+        self.qtgui_freq_sink_x_1_1 = qtgui.freq_sink_c(
+        	1024, #size
+        	firdes.WIN_BLACKMAN_hARRIS, #wintype
+        	vector[indice], #fc
+        	samp_rate, #bw
+        	'Filtro Passa Baixa', #name
+        	1 #number of inputs
+        )
+        self.qtgui_freq_sink_x_1_1.set_update_time(0.10)
+        self.qtgui_freq_sink_x_1_1.set_y_axis(-140, 10)
+        self.qtgui_freq_sink_x_1_1.set_y_label('Ganho Relativo', 'dB')
+        self.qtgui_freq_sink_x_1_1.set_trigger_mode(qtgui.TRIG_MODE_FREE, 0.0, 0, "")
+        self.qtgui_freq_sink_x_1_1.enable_autoscale(False)
+        self.qtgui_freq_sink_x_1_1.enable_grid(False)
+        self.qtgui_freq_sink_x_1_1.set_fft_average(0.1)
+        self.qtgui_freq_sink_x_1_1.enable_axis_labels(True)
+        self.qtgui_freq_sink_x_1_1.enable_control_panel(True)
+
+        if not True:
+          self.qtgui_freq_sink_x_1_1.disable_legend()
+
+        if "complex" == "float" or "complex" == "msg_float":
+          self.qtgui_freq_sink_x_1_1.set_plot_pos_half(not True)
+
+        labels = ['', '', '', '', '',
+                  '', '', '', '', '']
+        widths = [1, 1, 1, 1, 1,
+                  1, 1, 1, 1, 1]
+        colors = ["blue", "red", "green", "black", "cyan",
+                  "magenta", "yellow", "dark red", "dark green", "dark blue"]
+        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
+                  1.0, 1.0, 1.0, 1.0, 1.0]
+        for i in xrange(1):
+            if len(labels[i]) == 0:
+                self.qtgui_freq_sink_x_1_1.set_line_label(i, "Data {0}".format(i))
+            else:
+                self.qtgui_freq_sink_x_1_1.set_line_label(i, labels[i])
+            self.qtgui_freq_sink_x_1_1.set_line_width(i, widths[i])
+            self.qtgui_freq_sink_x_1_1.set_line_color(i, colors[i])
+            self.qtgui_freq_sink_x_1_1.set_line_alpha(i, alphas[i])
+
+        self._qtgui_freq_sink_x_1_1_win = sip.wrapinstance(self.qtgui_freq_sink_x_1_1.pyqwidget(), Qt.QWidget)
+        self.top_grid_layout.addWidget(self._qtgui_freq_sink_x_1_1_win, 5,0,1,3)
         self.qtgui_freq_sink_x_1_0 = qtgui.freq_sink_c(
         	1024, #size
         	firdes.WIN_BLACKMAN_hARRIS, #wintype
@@ -181,6 +224,8 @@ class top_block(gr.top_block, Qt.QWidget):
 
         self._qtgui_freq_sink_x_1_win = sip.wrapinstance(self.qtgui_freq_sink_x_1.pyqwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_freq_sink_x_1_win, 4,0,1,3)
+        self.low_pass_filter_0_1 = filter.fir_filter_ccf(int(samp_rate/down_rate), firdes.low_pass(
+        	2, samp_rate, 100e3, 10e3, firdes.WIN_HAMMING, 6.76))
         self._freq_Passa_Faixa_tool_bar = Qt.QToolBar(self)
 
         if None:
@@ -212,7 +257,9 @@ class top_block(gr.top_block, Qt.QWidget):
         # Connections
         ##################################################
         self.connect((self.band_pass_filter, 0), (self.qtgui_freq_sink_x_1_0, 0))
+        self.connect((self.low_pass_filter_0_1, 0), (self.qtgui_freq_sink_x_1_1, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.band_pass_filter, 0))
+        self.connect((self.rtlsdr_source_0, 0), (self.low_pass_filter_0_1, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.qtgui_freq_sink_x_1, 0))
 
     def closeEvent(self, event):
@@ -228,6 +275,7 @@ class top_block(gr.top_block, Qt.QWidget):
         self.set_LCF((self.vector[self.indice+1] -self.vector[self.indice])-self.bw)
         self.set_HCF((self.vector[self.indice+1] -self.vector[self.indice])+self.bw)
         self.rtlsdr_source_0.set_center_freq(self.vector[self.indice], 0)
+        self.qtgui_freq_sink_x_1_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
         self.qtgui_freq_sink_x_1_0.set_frequency_range(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste, self.samp_rate)
         self.qtgui_freq_sink_x_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
         self.set_freq_Passa_Faixa(self._freq_Passa_Faixa_formatter(self.vector[self.indice+1]))
@@ -241,6 +289,7 @@ class top_block(gr.top_block, Qt.QWidget):
         self.set_LCF((self.vector[self.indice+1] -self.vector[self.indice])-self.bw)
         self.set_HCF((self.vector[self.indice+1] -self.vector[self.indice])+self.bw)
         self.rtlsdr_source_0.set_center_freq(self.vector[self.indice], 0)
+        self.qtgui_freq_sink_x_1_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
         self.qtgui_freq_sink_x_1_0.set_frequency_range(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste, self.samp_rate)
         self.qtgui_freq_sink_x_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
         self.set_freq_Passa_Faixa(self._freq_Passa_Faixa_formatter(self.vector[self.indice+1]))
@@ -260,8 +309,10 @@ class top_block(gr.top_block, Qt.QWidget):
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
         self.rtlsdr_source_0.set_sample_rate(self.samp_rate)
+        self.qtgui_freq_sink_x_1_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
         self.qtgui_freq_sink_x_1_0.set_frequency_range(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste, self.samp_rate)
         self.qtgui_freq_sink_x_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
+        self.low_pass_filter_0_1.set_taps(firdes.low_pass(2, self.samp_rate, 100e3, 10e3, firdes.WIN_HAMMING, 6.76))
         self.band_pass_filter.set_taps(firdes.band_pass(2, self.samp_rate, self.LCF + self.ajuste, self.HCF + self.ajuste, 10e3, firdes.WIN_HAMMING, 6.76))
 
     def get_freq_Passa_Faixa(self):
