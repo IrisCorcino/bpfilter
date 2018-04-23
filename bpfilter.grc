@@ -136,6 +136,33 @@
     </param>
   </block>
   <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(352, 164)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>Update_Interval</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>0.10</value>
+    </param>
+  </block>
+  <block>
     <key>variable_qtgui_range</key>
     <param>
       <key>comment</key>
@@ -503,11 +530,11 @@
     </param>
     <param>
       <key>step</key>
-      <value>1</value>
+      <value>0.1</value>
     </param>
     <param>
       <key>stop</key>
-      <value>100</value>
+      <value>1</value>
     </param>
     <param>
       <key>rangeType</key>
@@ -542,7 +569,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -746,7 +773,7 @@
     </param>
     <param>
       <key>update_time</key>
-      <value>0.10</value>
+      <value>Update_Interval</value>
     </param>
   </block>
   <block>
@@ -773,7 +800,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -977,7 +1004,7 @@
     </param>
     <param>
       <key>update_time</key>
-      <value>0.10</value>
+      <value>Update_Interval</value>
     </param>
   </block>
   <block>
@@ -1173,7 +1200,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(752, 360)</value>
+      <value>(792, 328)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1275,7 +1302,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -1326,11 +1353,11 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(776, 572)</value>
+      <value>(776, 532)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1377,7 +1404,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(880, 364)</value>
+      <value>(888, 292)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1428,7 +1455,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -1475,7 +1502,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>0</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -1884,7 +1911,7 @@
     </param>
     <param>
       <key>update_time</key>
-      <value>0.10</value>
+      <value>Update_Interval</value>
     </param>
     <param>
       <key>wintype</key>
@@ -2183,7 +2210,7 @@
     </param>
     <param>
       <key>update_time</key>
-      <value>0.10</value>
+      <value>Update_Interval</value>
     </param>
     <param>
       <key>wintype</key>
@@ -2246,7 +2273,7 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>1</value>
+      <value>0</value>
     </param>
     <param>
       <key>fftsize</key>
@@ -2733,7 +2760,7 @@
     </param>
     <param>
       <key>update_time</key>
-      <value>0.10</value>
+      <value>Update_Interval</value>
     </param>
   </block>
   <block>

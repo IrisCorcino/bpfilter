@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Sun Apr 22 22:03:04 2018
+# Generated: Sun Apr 22 22:29:15 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -17,6 +17,7 @@ if __name__ == '__main__':
             print "Warning: failed to XInitThreads()"
 
 from PyQt4 import Qt
+from gnuradio import blocks
 from gnuradio import eng_notation
 from gnuradio import filter
 from gnuradio import gr
@@ -70,6 +71,7 @@ class top_block(gr.top_block, Qt.QWidget):
         self.freq_Passa_Baixa = freq_Passa_Baixa = vector[indice]
         self.down_rate = down_rate = 25e4
         self.ajuste = ajuste = 0
+        self.Update_Interval = Update_Interval = 0.10
         self.LCF = LCF = (vector[indice+1] -vector[indice])-bw
         self.HCF = HCF = (vector[indice+1] -vector[indice])+bw
 
@@ -95,49 +97,6 @@ class top_block(gr.top_block, Qt.QWidget):
         self.rtlsdr_source_0.set_antenna('', 0)
         self.rtlsdr_source_0.set_bandwidth(0, 0)
 
-        self.qtgui_freq_sink_x_1_1 = qtgui.freq_sink_c(
-        	1024, #size
-        	firdes.WIN_BLACKMAN_hARRIS, #wintype
-        	vector[indice], #fc
-        	samp_rate, #bw
-        	'Filtro Passa Baixa', #name
-        	1 #number of inputs
-        )
-        self.qtgui_freq_sink_x_1_1.set_update_time(0.10)
-        self.qtgui_freq_sink_x_1_1.set_y_axis(-140, 10)
-        self.qtgui_freq_sink_x_1_1.set_y_label('Ganho Relativo', 'dB')
-        self.qtgui_freq_sink_x_1_1.set_trigger_mode(qtgui.TRIG_MODE_FREE, 0.0, 0, "")
-        self.qtgui_freq_sink_x_1_1.enable_autoscale(False)
-        self.qtgui_freq_sink_x_1_1.enable_grid(False)
-        self.qtgui_freq_sink_x_1_1.set_fft_average(0.1)
-        self.qtgui_freq_sink_x_1_1.enable_axis_labels(True)
-        self.qtgui_freq_sink_x_1_1.enable_control_panel(True)
-
-        if not True:
-          self.qtgui_freq_sink_x_1_1.disable_legend()
-
-        if "complex" == "float" or "complex" == "msg_float":
-          self.qtgui_freq_sink_x_1_1.set_plot_pos_half(not True)
-
-        labels = ['', '', '', '', '',
-                  '', '', '', '', '']
-        widths = [1, 1, 1, 1, 1,
-                  1, 1, 1, 1, 1]
-        colors = ["blue", "red", "green", "black", "cyan",
-                  "magenta", "yellow", "dark red", "dark green", "dark blue"]
-        alphas = [1.0, 1.0, 1.0, 1.0, 1.0,
-                  1.0, 1.0, 1.0, 1.0, 1.0]
-        for i in xrange(1):
-            if len(labels[i]) == 0:
-                self.qtgui_freq_sink_x_1_1.set_line_label(i, "Data {0}".format(i))
-            else:
-                self.qtgui_freq_sink_x_1_1.set_line_label(i, labels[i])
-            self.qtgui_freq_sink_x_1_1.set_line_width(i, widths[i])
-            self.qtgui_freq_sink_x_1_1.set_line_color(i, colors[i])
-            self.qtgui_freq_sink_x_1_1.set_line_alpha(i, alphas[i])
-
-        self._qtgui_freq_sink_x_1_1_win = sip.wrapinstance(self.qtgui_freq_sink_x_1_1.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._qtgui_freq_sink_x_1_1_win, 5,0,1,3)
         self.qtgui_freq_sink_x_1_0 = qtgui.freq_sink_c(
         	1024, #size
         	firdes.WIN_BLACKMAN_hARRIS, #wintype
@@ -146,7 +105,7 @@ class top_block(gr.top_block, Qt.QWidget):
         	'Filtro Passa Faixa', #name
         	1 #number of inputs
         )
-        self.qtgui_freq_sink_x_1_0.set_update_time(0.10)
+        self.qtgui_freq_sink_x_1_0.set_update_time(Update_Interval)
         self.qtgui_freq_sink_x_1_0.set_y_axis(-140, 10)
         self.qtgui_freq_sink_x_1_0.set_y_label('Ganho Relativo', 'dB')
         self.qtgui_freq_sink_x_1_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, 0.0, 0, "")
@@ -189,7 +148,7 @@ class top_block(gr.top_block, Qt.QWidget):
         	'antes de filtrar', #name
         	1 #number of inputs
         )
-        self.qtgui_freq_sink_x_1.set_update_time(0.10)
+        self.qtgui_freq_sink_x_1.set_update_time(Update_Interval)
         self.qtgui_freq_sink_x_1.set_y_axis(-140, 10)
         self.qtgui_freq_sink_x_1.set_y_label('Relative Gain', 'dB')
         self.qtgui_freq_sink_x_1.set_trigger_mode(qtgui.TRIG_MODE_FREE, 0.0, 0, "")
@@ -250,14 +209,85 @@ class top_block(gr.top_block, Qt.QWidget):
         self._freq_Passa_Baixa_tool_bar.addWidget(self._freq_Passa_Baixa_label)
         self.top_grid_layout.addWidget(self._freq_Passa_Baixa_tool_bar, 3,0,1,3)
 
+        self.blocks_rms_xx_1 = blocks.rms_cf(0.0001)
+        self.blocks_rms_xx_0 = blocks.rms_cf(0.0001)
+        self.blocks_multiply_const_vxx_1_0 = blocks.multiply_const_vff((math.sqrt(2), ))
+        self.blocks_multiply_const_vxx_1 = blocks.multiply_const_vff((math.sqrt(2), ))
         self.band_pass_filter = filter.fir_filter_ccf(8, firdes.band_pass(
         	2, samp_rate, LCF + ajuste, HCF + ajuste, 10e3, firdes.WIN_HAMMING, 6.76))
+        self.POTENCIA_PASSA_FAIXA = qtgui.number_sink(
+            gr.sizeof_float,
+            0,
+            qtgui.NUM_GRAPH_NONE,
+            1
+        )
+        self.POTENCIA_PASSA_FAIXA.set_update_time(Update_Interval)
+        self.POTENCIA_PASSA_FAIXA.set_title('POTENCIA_PASSA_FAIXA')
+
+        labels = ['', '', '', '', '',
+                  '', '', '', '', '']
+        units = ['', '', '', '', '',
+                 '', '', '', '', '']
+        colors = [("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
+                  ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
+        factor = [1, 1, 1, 1, 1,
+                  1, 1, 1, 1, 1]
+        for i in xrange(1):
+            self.POTENCIA_PASSA_FAIXA.set_min(i, -1)
+            self.POTENCIA_PASSA_FAIXA.set_max(i, 1)
+            self.POTENCIA_PASSA_FAIXA.set_color(i, colors[i][0], colors[i][1])
+            if len(labels[i]) == 0:
+                self.POTENCIA_PASSA_FAIXA.set_label(i, "Data {0}".format(i))
+            else:
+                self.POTENCIA_PASSA_FAIXA.set_label(i, labels[i])
+            self.POTENCIA_PASSA_FAIXA.set_unit(i, units[i])
+            self.POTENCIA_PASSA_FAIXA.set_factor(i, factor[i])
+
+        self.POTENCIA_PASSA_FAIXA.enable_autoscale(False)
+        self._POTENCIA_PASSA_FAIXA_win = sip.wrapinstance(self.POTENCIA_PASSA_FAIXA.pyqwidget(), Qt.QWidget)
+        self.top_layout.addWidget(self._POTENCIA_PASSA_FAIXA_win)
+        self.POTENCIA_PASSA_BAIXA = qtgui.number_sink(
+            gr.sizeof_float,
+            0,
+            qtgui.NUM_GRAPH_NONE,
+            1
+        )
+        self.POTENCIA_PASSA_BAIXA.set_update_time(Update_Interval)
+        self.POTENCIA_PASSA_BAIXA.set_title('POTENCIA_PASSA_BAIXA')
+
+        labels = ['', '', '', '', '',
+                  '', '', '', '', '']
+        units = ['', '', '', '', '',
+                 '', '', '', '', '']
+        colors = [("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"),
+                  ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black"), ("black", "black")]
+        factor = [1, 1, 1, 1, 1,
+                  1, 1, 1, 1, 1]
+        for i in xrange(1):
+            self.POTENCIA_PASSA_BAIXA.set_min(i, -1)
+            self.POTENCIA_PASSA_BAIXA.set_max(i, 1)
+            self.POTENCIA_PASSA_BAIXA.set_color(i, colors[i][0], colors[i][1])
+            if len(labels[i]) == 0:
+                self.POTENCIA_PASSA_BAIXA.set_label(i, "Data {0}".format(i))
+            else:
+                self.POTENCIA_PASSA_BAIXA.set_label(i, labels[i])
+            self.POTENCIA_PASSA_BAIXA.set_unit(i, units[i])
+            self.POTENCIA_PASSA_BAIXA.set_factor(i, factor[i])
+
+        self.POTENCIA_PASSA_BAIXA.enable_autoscale(False)
+        self._POTENCIA_PASSA_BAIXA_win = sip.wrapinstance(self.POTENCIA_PASSA_BAIXA.pyqwidget(), Qt.QWidget)
+        self.top_layout.addWidget(self._POTENCIA_PASSA_BAIXA_win)
 
         ##################################################
         # Connections
         ##################################################
+        self.connect((self.band_pass_filter, 0), (self.blocks_rms_xx_0, 0))
         self.connect((self.band_pass_filter, 0), (self.qtgui_freq_sink_x_1_0, 0))
-        self.connect((self.low_pass_filter_0_1, 0), (self.qtgui_freq_sink_x_1_1, 0))
+        self.connect((self.blocks_multiply_const_vxx_1, 0), (self.POTENCIA_PASSA_FAIXA, 0))
+        self.connect((self.blocks_multiply_const_vxx_1_0, 0), (self.POTENCIA_PASSA_BAIXA, 0))
+        self.connect((self.blocks_rms_xx_0, 0), (self.blocks_multiply_const_vxx_1, 0))
+        self.connect((self.blocks_rms_xx_1, 0), (self.blocks_multiply_const_vxx_1_0, 0))
+        self.connect((self.low_pass_filter_0_1, 0), (self.blocks_rms_xx_1, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.band_pass_filter, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.low_pass_filter_0_1, 0))
         self.connect((self.rtlsdr_source_0, 0), (self.qtgui_freq_sink_x_1, 0))
@@ -275,7 +305,6 @@ class top_block(gr.top_block, Qt.QWidget):
         self.set_LCF((self.vector[self.indice+1] -self.vector[self.indice])-self.bw)
         self.set_HCF((self.vector[self.indice+1] -self.vector[self.indice])+self.bw)
         self.rtlsdr_source_0.set_center_freq(self.vector[self.indice], 0)
-        self.qtgui_freq_sink_x_1_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
         self.qtgui_freq_sink_x_1_0.set_frequency_range(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste, self.samp_rate)
         self.qtgui_freq_sink_x_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
         self.set_freq_Passa_Faixa(self._freq_Passa_Faixa_formatter(self.vector[self.indice+1]))
@@ -289,7 +318,6 @@ class top_block(gr.top_block, Qt.QWidget):
         self.set_LCF((self.vector[self.indice+1] -self.vector[self.indice])-self.bw)
         self.set_HCF((self.vector[self.indice+1] -self.vector[self.indice])+self.bw)
         self.rtlsdr_source_0.set_center_freq(self.vector[self.indice], 0)
-        self.qtgui_freq_sink_x_1_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
         self.qtgui_freq_sink_x_1_0.set_frequency_range(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste, self.samp_rate)
         self.qtgui_freq_sink_x_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
         self.set_freq_Passa_Faixa(self._freq_Passa_Faixa_formatter(self.vector[self.indice+1]))
@@ -309,7 +337,6 @@ class top_block(gr.top_block, Qt.QWidget):
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
         self.rtlsdr_source_0.set_sample_rate(self.samp_rate)
-        self.qtgui_freq_sink_x_1_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
         self.qtgui_freq_sink_x_1_0.set_frequency_range(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste, self.samp_rate)
         self.qtgui_freq_sink_x_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
         self.low_pass_filter_0_1.set_taps(firdes.low_pass(2, self.samp_rate, 100e3, 10e3, firdes.WIN_HAMMING, 6.76))
@@ -342,6 +369,16 @@ class top_block(gr.top_block, Qt.QWidget):
         self.ajuste = ajuste
         self.qtgui_freq_sink_x_1_0.set_frequency_range(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste, self.samp_rate)
         self.band_pass_filter.set_taps(firdes.band_pass(2, self.samp_rate, self.LCF + self.ajuste, self.HCF + self.ajuste, 10e3, firdes.WIN_HAMMING, 6.76))
+
+    def get_Update_Interval(self):
+        return self.Update_Interval
+
+    def set_Update_Interval(self, Update_Interval):
+        self.Update_Interval = Update_Interval
+        self.qtgui_freq_sink_x_1_0.set_update_time(self.Update_Interval)
+        self.qtgui_freq_sink_x_1.set_update_time(self.Update_Interval)
+        self.POTENCIA_PASSA_FAIXA.set_update_time(self.Update_Interval)
+        self.POTENCIA_PASSA_BAIXA.set_update_time(self.Update_Interval)
 
     def get_LCF(self):
         return self.LCF
