@@ -1,0 +1,35 @@
+0 blacklist modules on host linux
+echo "blacklist dvb_usb_rtl28xxu" >> /etc/modprobe.d/rtl-sdr-blacklist.conf
+echo "blacklist e4000" >> /etc/modprobe.d/rtl-sdr-blacklist.conf
+echo "blacklist rtl2832" >> /etc/modprobe.d/rtl-sdr-blacklist.conf
+
+0 install docker cd as described on https://docs.docker.com/install/
+
+1 build the container
+docker build -t ubuntu16-04-pybombs-gnuradio-rtl-sdr .
+
+2.1 run with GUI
+xhost +local:root
+sudo docker run --privileged -it --net host -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY -v /dev/bus/usb:/dev/bus/usb -v /$HOME/git/bpfilter/:/root/projects/bpfilter --device /dev/snd ubuntu16-04-pybombs-gnuradio-rtl-sdr pybombs run gnuradio-companion
+
+2.2 run without GUI
+sudo docker run --privileged -it --net host -v /dev/bus/usb:/dev/bus/usb -v /$HOME/git/bpfilter/:/root/projects/bpfilter ubuntu16-04-pybombs-gnuradio-rtl-sdr
+
+* useful commands
+- run image
+sudo docker run -it <name>
+
+- list all images
+sudo docker images
+
+- list all existing containers
+sudo docker ps -a
+
+- stop all running containers
+sudo docker stop $(sudo docker ps -a -q)
+
+- deleting all existing containers
+sudo docker rm $(sudo docker ps -q -a)
+
+-deleting all existing images
+sudo docker rmi $(sudo docker images -q)
