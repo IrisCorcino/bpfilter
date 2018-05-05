@@ -37,4 +37,4 @@ class Measurement():
         return filters
 
     def getPattern(self, filename):
-        return filename.partition('_')[0] + '_'
+        return filename.partition('_')[0]
