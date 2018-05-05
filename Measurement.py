@@ -29,3 +29,12 @@ class Measurement():
 
     def getFrequency(self, index):
         return self.tb.get_vector()[index]
+
+    def getFilters(self):
+        filters = []
+        filters.append(self.getPattern(self.tb.get_FileNameCAS()))
+        filters.append(self.getPattern(self.tb.get_FileNameCP()))
+        return filters
+
+    def getPattern(self, filename):
+        return filename.partition('_')[0] + '_'
