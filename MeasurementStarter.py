@@ -1,6 +1,9 @@
 import Measurement
 import BinaryReader
 import ExcelWriter
+import collections
+
+MeasurementContext = collections.namedtuple('MeasurementContext', ['reader', 'index', 'freq', 'loc'])
 
 def main():
     titles = ['Index', 'Frequency', 'Min', 'Avg', 'Max']
@@ -12,15 +15,16 @@ def main():
     writeHeader(writers, titles)
     for i in xrange(0,measurement.getSize()-1):
         measurement.startMeasurement(i,2)
-	freq = measurement.getFrequency(i)
-        writeDataSet(binaryReader, writers, i, freq, location, filters)
+    freq = measurement.getFrequency(i)
+    context = MeasurementContext(binaryReader, i, freq, location)
+    writeDataSet(context, filters, writers)
     closeWriters(writers)
 
-def getWriters(strings):
+def getWriters(filters):
    writers = []
-   for string in strings:
+   for filter in filters:
        writer = ExcelWriter.ExcelWriter()
-       writer.open(string + '.csv')
+       writer.open(filter + '.csv')
        writers.append(writer)
    return writers
 
@@ -28,16 +32,20 @@ def writeHeader(writers, titles):
     for writer in writers:
         writeRow(writer, titles)
 
-def writeDataSet(reader, writers, index, freq, location, strings, firstAndLast = 20):
+def writeDataSet(context, filters, writers):
     for i, writer in enumerate(writers):
-        data = prepareData(reader, index, location, strings[i], freq, firstAndLast)
+        data = prepareData(context, filters[i])
         writeRow(writer, data)
 
 def writeRow(writer, data):
     writer.writeRow(data)
-    
-def prepareData(reader, index, location, type, frequency, firstAndLast):
-    reader.readToFloat(location + type + '_' + str(index) + '.bin')
+
+def prepareData(context, filter, firstAndLast = 20):
+    reader = context.reader
+    index = context.index
+    frequency = context.freq
+    location = context.loc
+    reader.readToFloat(location + filter + '_' + str(index) + '.bin')
     data = [index, frequency, reader.getMin(), reader.getAvg(), reader.getMax()]
     for number in reader.getData()[:firstAndLast]:
         data.append(number)
@@ -48,6 +56,6 @@ def prepareData(reader, index, location, type, frequency, firstAndLast):
 def closeWriters(writers):
     for writer in writers:
 	    writer.close()
- 
+
 if __name__ == '__main__':
 	main()
