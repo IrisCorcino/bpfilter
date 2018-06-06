@@ -2,19 +2,25 @@ import Measurement
 import BinaryReader
 import ExcelWriter
 import collections
+import sys
 
 MeasurementContext = collections.namedtuple('MeasurementContext', ['reader', 'index', 'freq', 'loc'])
 
 def main():
+    if len(sys.argv) != 3:
+        print 'location and measuring time not specified'
+
+    location = sys.argv[1]
+    measuringTime = int(sys.argv[2])
     titles = ['Index', 'Frequency', 'Min', 'Avg', 'Max']
-    location = '/home/iris/Desktop/medidas/'
+
     measurement = Measurement.Measurement()
     binaryReader = BinaryReader.BinaryReader()
     filters = measurement.getFilters()
     writers = getWriters(filters)
     writeHeader(writers, titles)
     for i in xrange(0,measurement.getSize()-1):
-        measurement.startMeasurement(i,2)
+        measurement.startMeasurement(i,measuringTime)
     freq = measurement.getFrequency(i)
     context = MeasurementContext(binaryReader, i, freq, location)
     writeDataSet(context, filters, writers)
