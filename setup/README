@@ -1,19 +1,57 @@
-0 blacklist modules on host linux
-echo "blacklist dvb_usb_rtl28xxu" >> /etc/modprobe.d/rtl-sdr-blacklist.conf
-echo "blacklist e4000" >> /etc/modprobe.d/rtl-sdr-blacklist.conf
-echo "blacklist rtl2832" >> /etc/modprobe.d/rtl-sdr-blacklist.conf
+0 - preparation
+linux
+a - install docker cd as described on https://docs.docker.com/install/
+b - open a terminal
 
-0 install docker cd as described on https://docs.docker.com/install/
-
-1 build the container
+windows
+a - install docker toolbox from https://docs.docker.com/toolbox/overview/#ready-to-get-started
+b - start Kitematic
+c - select option USE VIRTUALBOX (this will use a Linux virtual machine to run Docker containers)
+d - got stuck at Starting Docker VM 100% for > 5min (https://github.com/docker/toolbox/issues/438)
+e - open docker cli in Kitematic
+-----------------------------------------------------------------------------------------------------------------------------------------
+1 - build the container (this step will roughly take 1.5h with a proper internet connection, it is a a lot to download and to build)
+cd <setup directory>
 docker build -t ubuntu16-04-pybombs-gnuradio-rtl-sdr .
+(got stuck in step 1 on windows -> solution delete default vm and redo from step 0b -> docker-machine rm default) 
 
-2.1 run with GUI
-xhost +local:root
-sudo docker run --privileged -it --net host -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY -v /dev/bus/usb:/dev/bus/usb -v /$HOME/git/bpfilter/:/root/projects/bpfilter --device /dev/snd ubuntu16-04-pybombs-gnuradio-rtl-sdr pybombs run gnuradio-companion
+-----------------------------------------------------------------------------------------------------------------------------------------
+2 -
+linux
+a - blacklist modules on host
+	echo "blacklist dvb_usb_rtl28xxu" >> /etc/modprobe.d/rtl-sdr-blacklist.conf
+	echo "blacklist e4000" >> /etc/modprobe.d/rtl-sdr-blacklist.conf
+	echo "blacklist rtl2832" >> /etc/modprobe.d/rtl-sdr-blacklist.conf
+b - reboot
 
-2.2 run without GUI
-sudo docker run --privileged -it --net host -v /dev/bus/usb:/dev/bus/usb -v /$HOME/git/bpfilter/:/root/projects/bpfilter ubuntu16-04-pybombs-gnuradio-rtl-sdr
+windows
+a - stop machine
+	docker-machine stop default
+b - open Oracle VM VirtualBox
+c - add USB device
+	right click on machine default -> Settings..
+	USB -> USB 1.1
+	add new USB filter -> the rtl-sdr device
+	OK
+d - start machine
+	docker-machine start default
+-----------------------------------------------------------------------------------------------------------------------------------------
+3 - run the container
+linux
+a.1 - run with GUI
+	xhost +local:root
+	sudo docker run --privileged -it --net host -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=unix$DISPLAY -v /dev/bus/usb:/dev/bus/usb -v /$HOME/git/bpfilter/:/root/projects/bpfilter --device /dev/snd ubuntu16-04-pybombs-gnuradio-rtl-sdr pybombs run gnuradio-companion
+
+a.2 - run without GUI
+	sudo docker run --privileged -it --net host -v /dev/bus/usb:/dev/bus/usb -v /$HOME/git/bpfilter/:/root/projects/bpfilter ubuntu16-04-pybombs-gnuradio-rtl-sdr
+
+windows
+TODO:
+a.1 - run with GUI
+
+a.2 - run without GUI
+	docker run --privileged -it --net host -v /dev/bus/usb:/dev/bus/usb ubuntu16-04-pybombs-gnuradio-rtl-sdr
+------------------------------------------------------------------------------------------------------------------------------------------
 
 * useful commands
 - run image
