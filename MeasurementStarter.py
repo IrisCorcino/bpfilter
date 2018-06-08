@@ -1,10 +1,67 @@
 import Measurement
+import BinaryReader
+import ExcelWriter
+import collections
+import sys
+
+MeasurementContext = collections.namedtuple('MeasurementContext', ['reader', 'index', 'freq', 'loc'])
 
 def main():
+    if len(sys.argv) != 3:
+        print 'location and measuring time not specified'
+
+    location = sys.argv[1]
+    measuringTime = int(sys.argv[2])
+    titles = ['Index', 'Frequency', 'Min', 'Avg', 'Max']
+
     measurement = Measurement.Measurement()
+    binaryReader = BinaryReader.BinaryReader()
+    filters = measurement.getFilters()
+    writers = getWriters(filters)
+    writeHeader(writers, titles)
     for i in xrange(0,measurement.getSize()-1):
-        measurement.startMeasurement(i,2)
-    #measurement.quit()
-    
+        measurement.startMeasurement(i,measuringTime)
+    freq = measurement.getFrequency(i)
+    context = MeasurementContext(binaryReader, i, freq, location)
+    writeDataSet(context, filters, writers)
+    closeWriters(writers)
+
+def getWriters(filters):
+   writers = []
+   for filter in filters:
+       writer = ExcelWriter.ExcelWriter()
+       writer.open(filter + '.csv')
+       writers.append(writer)
+   return writers
+
+def writeHeader(writers, titles):
+    for writer in writers:
+        writeRow(writer, titles)
+
+def writeDataSet(context, filters, writers):
+    for i, writer in enumerate(writers):
+        data = prepareData(context, filters[i])
+        writeRow(writer, data)
+
+def writeRow(writer, data):
+    writer.writeRow(data)
+
+def prepareData(context, filter, firstAndLast = 20):
+    reader = context.reader
+    index = context.index
+    frequency = context.freq
+    location = context.loc
+    reader.readToFloat(location + filter + '_' + str(index) + '.bin')
+    data = [index, frequency, reader.getMin(), reader.getAvg(), reader.getMax()]
+    for number in reader.getData()[:firstAndLast]:
+        data.append(number)
+    for number in reader.getData()[-firstAndLast:]:
+        data.append(number)
+    return data
+
+def closeWriters(writers):
+    for writer in writers:
+	    writer.close()
+
 if __name__ == '__main__':
 	main()
