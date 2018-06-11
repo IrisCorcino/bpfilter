@@ -1,11 +1,13 @@
 import sys
-print sys.path[0]
 sys.path.append(sys.path[0] + '/../utils/')
 print sys.path
 from BaseMeasurement import BaseMeasurement
 from top_block import top_block
 
 class PSMeasurement(BaseMeasurement):
+
+    def __init__(self, top_block):
+        self(BaseMeasurement, self).__init__(top_block)
 
     def getFilters(self):
         filters = []
