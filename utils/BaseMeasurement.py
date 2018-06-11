@@ -1,18 +1,16 @@
-import top_block
 import sys
 from PyQt4 import Qt
 from gnuradio import gr
 
+class BaseMeasurement():
 
-class Measurement():
-
-    def __init__(self):
+    def __init__(self, topBlock):
         from distutils.version import StrictVersion
         if StrictVersion(Qt.qVersion()) >= StrictVersion("4.5.0"):
             style = gr.prefs().get_string('qtgui', 'style', 'raster')
             Qt.QApplication.setGraphicsSystem(style)
         self.qapp = Qt.QApplication(sys.argv)
-        self.tb = top_block.top_block()
+        self.tb = topBlock
 
     def getSize(self):
         return len(self.tb.vector)
@@ -30,11 +28,9 @@ class Measurement():
     def getFrequency(self, index):
         return self.tb.get_vector()[index]
 
+    @abstractmethod
     def getFilters(self):
-        filters = []
-        filters.append(self.getPattern(self.tb.get_FileNameCAS()))
-        filters.append(self.getPattern(self.tb.get_FileNameCP()))
-        return filters
+				pass
 
     def getPattern(self, filename):
         return filename.partition('_')[0]

@@ -1,12 +1,11 @@
-import Measurement
-import BinaryReader
-import ExcelWriter
+from BinaryReader import BinaryReader
+from ExcelWriter import ExcelWriter
 import collections
 import sys
 
 MeasurementContext = collections.namedtuple('MeasurementContext', ['reader', 'index', 'freq', 'loc'])
 
-def main():
+def startMeasurement(measurement):
     if len(sys.argv) != 3:
         print 'location and measuring time not specified'
 
@@ -14,8 +13,7 @@ def main():
     measuringTime = int(sys.argv[2])
     titles = ['Index', 'Frequency', 'Min', 'Avg', 'Max']
 
-    measurement = Measurement.Measurement()
-    binaryReader = BinaryReader.BinaryReader()
+    binaryReader = BinaryReader()
     filters = measurement.getFilters()
     writers = getWriters(filters)
     writeHeader(writers, titles)
@@ -29,7 +27,7 @@ def main():
 def getWriters(filters):
    writers = []
    for filter in filters:
-       writer = ExcelWriter.ExcelWriter()
+       writer = ExcelWriter()
        writer.open(filter + '.csv')
        writers.append(writer)
    return writers
@@ -62,6 +60,3 @@ def prepareData(context, filter, firstAndLast = 20):
 def closeWriters(writers):
     for writer in writers:
 	    writer.close()
-
-if __name__ == '__main__':
-	main()

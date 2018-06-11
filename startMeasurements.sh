@@ -21,7 +21,8 @@ if [[ $(($2)) != $2 ]]; then
   print_info_and_exit
 fi
 
-TARGET_DIR = $1
-MEASUREMENT_IN_SEC = $2
+TARGET_DIR=$1
+MEASUREMENT_IN_SEC=$2
 source ~/pybombs/prefix/default/setup_env.sh
-python2 ./MeasurementStarter.py $TARGET_DIR $MEASUREMENT_IN_SEC
+python2 ./potency_of_signal/PSMeasurementStarter.py $TARGET_DIR $MEASUREMENT_IN_SEC
+python2 ./signal_to_noise_ratio/SNRMeasurementStarter.py $TARGET_DIR $MEASUREMENT_IN_SEC
