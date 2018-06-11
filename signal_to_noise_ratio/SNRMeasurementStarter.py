@@ -1,8 +1,8 @@
-from top_block import top_block
 import sys
-sys.path.append('../utils/')
-import BaseMeasurementStarter
+sys.path.append(sys.path[0] + '/../utils/')
+print sys.path
 from BaseMeasurement import BaseMeasurement
+from top_block import top_block
 
 class SNRMeasurement(BaseMeasurement):
 
