@@ -8,7 +8,7 @@ from top_block import top_block
 class SNRMeasurement(BaseMeasurement):
 
     def __init__(self):
-        super(BaseMeasurement, self).__init__()
+        super(SNRMeasurement, self).__init__()
 
     def getFilters(self):
         filters = []
