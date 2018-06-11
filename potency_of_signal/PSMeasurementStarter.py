@@ -7,8 +7,8 @@ from top_block import top_block
 
 class PSMeasurement(BaseMeasurement):
 
-    def __init__(self, top_block):
-        self(BaseMeasurement, self).__init__(top_block)
+    def __init__(self):
+        self(BaseMeasurement, self).__init__()
 
     def getFilters(self):
         filters = []
