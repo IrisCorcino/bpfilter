@@ -8,14 +8,14 @@ class SNRMeasurement(BaseMeasurement):
 
     def __init__(self, top_block):
         self(BaseMeasurement, self).__init__(top_block)
-        
+
     def getFilters(self):
         filters = []
         filters.append(self.getPattern(self.tb.get_FileNameSND()))
         return filters
 
 def main():
-    tb = top_block()
+    tb = top_block
     BaseMeasurementStarter.startMeasurement(SNRMeasurement(tb))
 
 if __name__ == '__main__':

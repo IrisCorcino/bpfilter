@@ -10,7 +10,7 @@ class BaseMeasurement():
             style = gr.prefs().get_string('qtgui', 'style', 'raster')
             Qt.QApplication.setGraphicsSystem(style)
         self.qapp = Qt.QApplication(sys.argv)
-        self.tb = topBlock
+        self.tb = topBlock()
 
     def getSize(self):
         return len(self.tb.vector)
