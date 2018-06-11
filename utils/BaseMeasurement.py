@@ -28,7 +28,6 @@ class BaseMeasurement():
     def getFrequency(self, index):
         return self.tb.get_vector()[index]
 
-    @abstractmethod
     def getFilters(self):
 				pass
 
