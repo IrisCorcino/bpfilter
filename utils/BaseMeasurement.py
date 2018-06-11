@@ -31,7 +31,11 @@ class BaseMeasurement():
         return self.tb.get_vector()[index]
 
     def getFilters(self):
-				pass
+        pass
 
     def getPattern(self, filename):
         return filename.partition('_')[0]
+
+    def getOutputLocation(self):
+	#TODO dynamic
+	return "/home/iris/Desktop/medidas/"

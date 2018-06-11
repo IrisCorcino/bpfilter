@@ -168,7 +168,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"SND_"+str(NUM)+".bin"</value>
+      <value>"SND_"+str(indice)+".bin"</value>
     </param>
   </block>
   <block>
@@ -212,69 +212,6 @@
     <param>
       <key>type</key>
       <value>real</value>
-    </param>
-  </block>
-  <block>
-    <key>variable_qtgui_range</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(728, 24)</value>
-    </param>
-    <param>
-      <key>gui_hint</key>
-      <value>1,0,1,1</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>NUM</value>
-    </param>
-    <param>
-      <key>label</key>
-      <value></value>
-    </param>
-    <param>
-      <key>min_len</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>orient</key>
-      <value>Qt.Horizontal</value>
-    </param>
-    <param>
-      <key>start</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>step</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>stop</key>
-      <value>40</value>
-    </param>
-    <param>
-      <key>rangeType</key>
-      <value>int</value>
-    </param>
-    <param>
-      <key>widget</key>
-      <value>counter</value>
     </param>
   </block>
   <block>
@@ -692,7 +629,7 @@
     </param>
     <param>
       <key>gui_hint</key>
-      <value>3,6,1,1</value>
+      <value>3,0,1,1</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -923,7 +860,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(240, 340)</value>
+      <value>(256, 372)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1045,7 +982,7 @@
     </param>
     <param>
       <key>file</key>
-      <value>"/home/iris/Desktop/SND/medida_SND/"+ FileNameSND</value>
+      <value>"/home/iris/Desktop/medidas/"+ FileNameSND</value>
     </param>
     <param>
       <key>_coordinate</key>

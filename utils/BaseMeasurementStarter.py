@@ -3,7 +3,7 @@ from ExcelWriter import ExcelWriter
 import collections
 import sys
 
-MeasurementContext = collections.namedtuple('MeasurementContext', ['reader', 'index', 'freq', 'loc'])
+MeasurementContext = collections.namedtuple('MeasurementContext', ['reader', 'index', 'freq', 'inputloc', 'outputloc'])
 
 def startMeasurement(measurement):
     if len(sys.argv) != 3:
@@ -15,20 +15,22 @@ def startMeasurement(measurement):
 
     binaryReader = BinaryReader()
     filters = measurement.getFilters()
-    writers = getWriters(filters)
+    inLoc = measurement.getOutputLocation()
+    outLoc = location
+    writers = getWriters(outLoc, filters)
     writeHeader(writers, titles)
     for i in xrange(0,measurement.getSize()-1):
         measurement.startMeasurement(i,measuringTime)
-    freq = measurement.getFrequency(i)
-    context = MeasurementContext(binaryReader, i, freq, location)
-    writeDataSet(context, filters, writers)
+        freq = measurement.getFrequency(i)
+        context = MeasurementContext(binaryReader, i, freq, inLoc, outLoc)
+        writeDataSet(context, filters, writers)
     closeWriters(writers)
 
-def getWriters(filters):
+def getWriters(outputLocation, filters):
    writers = []
    for filter in filters:
        writer = ExcelWriter()
-       writer.open(filter + '.csv')
+       writer.open(outputLocation + filter + '.csv')
        writers.append(writer)
    return writers
 
@@ -48,7 +50,7 @@ def prepareData(context, filter, firstAndLast = 20):
     reader = context.reader
     index = context.index
     frequency = context.freq
-    location = context.loc
+    location = context.inputloc
     reader.readToFloat(location + filter + '_' + str(index) + '.bin')
     data = [index, frequency, reader.getMin(), reader.getAvg(), reader.getMax()]
     for number in reader.getData()[:firstAndLast]:

@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Sun Jun 10 20:28:47 2018
+# Generated: Sun Jun 10 22:54:04 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -71,7 +71,6 @@ class top_block(gr.top_block, Qt.QWidget):
         self.freq_Passa_Faixa = freq_Passa_Faixa = vector[indice+1]
         self.Update_Interval = Update_Interval = 0.1
         self.Quadrature = Quadrature = 50e4
-        self.NUM = NUM = 0
         self.FreqChannel = FreqChannel = vector[indice]
         self.FileNameSND = FileNameSND = "SND_"+str(indice)+".bin"
         self.BandWidth = BandWidth = 100e3
@@ -133,7 +132,7 @@ class top_block(gr.top_block, Qt.QWidget):
         self.blocks_rms_xx_1 = blocks.rms_cf(0.0001)
         self.blocks_rms_xx_0 = blocks.rms_cf(0.0001)
         self.blocks_nlog10_ff_0_1_0 = blocks.nlog10_ff(20, 1, 1)
-        self.blocks_file_sink_1_0 = blocks.file_sink(gr.sizeof_float*1, "/home/iris/Desktop/SND/medida_SND/"+ FileNameSND, False)
+        self.blocks_file_sink_1_0 = blocks.file_sink(gr.sizeof_float*1, "/home/iris/Desktop/medidas/"+ FileNameSND, False)
         self.blocks_file_sink_1_0.set_unbuffered(False)
         self.blocks_divide_xx_0 = blocks.divide_ff(1)
         self.band_pass_filter = filter.fir_filter_ccf(12, firdes.band_pass(
@@ -168,10 +167,7 @@ class top_block(gr.top_block, Qt.QWidget):
 
         self.POTENCIA_PASSA_BAIXA_0.enable_autoscale(False)
         self._POTENCIA_PASSA_BAIXA_0_win = sip.wrapinstance(self.POTENCIA_PASSA_BAIXA_0.pyqwidget(), Qt.QWidget)
-        self.top_grid_layout.addWidget(self._POTENCIA_PASSA_BAIXA_0_win, 3,6,1,1)
-        self._NUM_range = Range(0, 40, 1, 0, 2)
-        self._NUM_win = RangeWidget(self._NUM_range, self.set_NUM, "NUM", "counter", int)
-        self.top_grid_layout.addWidget(self._NUM_win, 1,0,1,1)
+        self.top_grid_layout.addWidget(self._POTENCIA_PASSA_BAIXA_0_win, 3,0,1,1)
         self._FreqChannel_tool_bar = Qt.QToolBar(self)
 
         if None:
@@ -277,12 +273,6 @@ class top_block(gr.top_block, Qt.QWidget):
     def set_Quadrature(self, Quadrature):
         self.Quadrature = Quadrature
 
-    def get_NUM(self):
-        return self.NUM
-
-    def set_NUM(self, NUM):
-        self.NUM = NUM
-
     def get_FreqChannel(self):
         return self.FreqChannel
 
@@ -295,7 +285,7 @@ class top_block(gr.top_block, Qt.QWidget):
 
     def set_FileNameSND(self, FileNameSND):
         self.FileNameSND = FileNameSND
-        self.blocks_file_sink_1_0.open("/home/iris/Desktop/SND/medida_SND/"+ self.FileNameSND)
+        self.blocks_file_sink_1_0.open("/home/iris/Desktop/medidas/"+ self.FileNameSND)
 
     def get_BandWidth(self):
         return self.BandWidth

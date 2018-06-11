@@ -33,7 +33,6 @@ import sys
 import time
 from gnuradio import qtgui
 
-
 class top_block(gr.top_block, Qt.QWidget):
 
     def __init__(self):
