@@ -17,8 +17,7 @@ class SNRMeasurement(BaseMeasurement):
 
 def main():
     measurement = SNRMeasurement()
-    tb = top_block()
-    measurement.setTopBlock(top_block)
+    measurement.setTopBlock(top_block())
     BaseMeasurementStarter.startMeasurement(measurement)
 
 if __name__ == '__main__':

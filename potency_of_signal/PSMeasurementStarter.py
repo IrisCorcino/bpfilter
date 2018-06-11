@@ -18,8 +18,7 @@ class PSMeasurement(BaseMeasurement):
 
 def main():
     measurement = PSMeasurement()
-    tb = top_block()
-    measurement.setTopBlock(top_block)
+    measurement.setTopBlock(top_block())
     BaseMeasurementStarter.startMeasurement(measurement)
 
 if __name__ == '__main__':
