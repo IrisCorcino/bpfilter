@@ -17,8 +17,10 @@ class PSMeasurement(BaseMeasurement):
         return filters
 
 def main():
-    tb = top_block
-    BaseMeasurementStarter.startMeasurement(PSMeasurement(tb))
+    tb = top_block()
+    measurement = PSMeasurement()
+    measurement.setTopBlock(top_block)
+    BaseMeasurementStarter.startMeasurement(measurement)
 
 if __name__ == '__main__':
     main()

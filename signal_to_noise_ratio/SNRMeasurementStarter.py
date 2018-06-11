@@ -16,8 +16,10 @@ class SNRMeasurement(BaseMeasurement):
         return filters
 
 def main():
-    tb = top_block
-    BaseMeasurementStarter.startMeasurement(SNRMeasurement(tb))
+    tb = top_block()
+    measurement = SNRMeasurement()
+    measurement.setTopBlock(top_block)
+    BaseMeasurementStarter.startMeasurement(measurement)
 
 if __name__ == '__main__':
     main()
