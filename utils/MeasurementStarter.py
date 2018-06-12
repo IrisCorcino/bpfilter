@@ -1,5 +1,5 @@
 from BinaryReader import BinaryReader
-from ExcelWriter import ExcelWriter
+from CSVWriter import CSVWriter
 import collections
 import sys
 
@@ -11,54 +11,54 @@ def startMeasurement(measurement):
 
     location = sys.argv[1]
     measuringTime = int(sys.argv[2])
-    titles = ['Index', 'Frequency', 'Min', 'Avg', 'Max']
+    titles = ['Index', 'Frequency', 'sample count', 'Min', 'Avg', 'Max']
 
     binaryReader = BinaryReader()
-    filters = measurement.getFilters()
+    sources = measurement.getSources()
     inLoc = measurement.getOutputLocation()
     outLoc = location
-    writers = getWriters(outLoc, filters)
-    writeHeader(writers, titles)
+    writers = _getWriters(outLoc, sources)
+    _writeHeader(writers, titles)
     for i in xrange(0,measurement.getSize()-1):
         measurement.startMeasurement(i,measuringTime)
         freq = measurement.getFrequency(i)
         context = MeasurementContext(binaryReader, i, freq, inLoc, outLoc)
-        writeDataSet(context, filters, writers)
-    closeWriters(writers)
+        _writeDataSet(context, sources, writers)
+    _closeWriters(writers)
 
-def getWriters(outputLocation, filters):
+def _getWriters(outputLocation, sources):
    writers = []
-   for filter in filters:
-       writer = ExcelWriter()
-       writer.open(outputLocation + filter + '.csv')
+   for source in sources:
+       writer = CSVWriter()
+       writer.open(outputLocation + source + '.csv')
        writers.append(writer)
    return writers
 
-def writeHeader(writers, titles):
+def _writeHeader(writers, titles):
     for writer in writers:
-        writeRow(writer, titles)
+        _writeRow(writer, titles)
 
-def writeDataSet(context, filters, writers):
+def _writeDataSet(context, sources, writers):
     for i, writer in enumerate(writers):
-        data = prepareData(context, filters[i])
-        writeRow(writer, data)
+        data = _prepareData(context, sources[i])
+        _writeRow(writer, data)
 
-def writeRow(writer, data):
+def _writeRow(writer, data):
     writer.writeRow(data)
 
-def prepareData(context, filter, firstAndLast = 20):
+def _prepareData(context, source, firstAndLast = 20):
     reader = context.reader
     index = context.index
     frequency = context.freq
     location = context.inputloc
-    reader.readToFloat(location + filter + '_' + str(index) + '.bin')
-    data = [index, frequency, reader.getMin(), reader.getAvg(), reader.getMax()]
+    reader.readToFloat(location + source + '_' + str(index) + '.bin')
+    data = [index, frequency, reader.getSize(), reader.getMin(), reader.getAvg(), reader.getMax()]
     for number in reader.getData()[:firstAndLast]:
         data.append(number)
     for number in reader.getData()[-firstAndLast:]:
         data.append(number)
     return data
 
-def closeWriters(writers):
+def _closeWriters(writers):
     for writer in writers:
 	    writer.close()

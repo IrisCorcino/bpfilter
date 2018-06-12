@@ -1,6 +1,6 @@
 import csv
 
-class ExcelWriter():
+class CSVWriter():
 
     def open(self, fileName):
         self.file = open(fileName, 'wb')

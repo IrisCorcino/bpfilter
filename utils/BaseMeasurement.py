@@ -20,6 +20,7 @@ class BaseMeasurement():
     def startMeasurement(self, index, time):
         print("measuring {}").format(self.getFrequency(index))
         self.tb.set_indice(index)
+				Qt.QThread.sleep(1)
         self.tb.start()
         self.tb.show()
 
@@ -30,12 +31,12 @@ class BaseMeasurement():
     def getFrequency(self, index):
         return self.tb.get_vector()[index]
 
-    def getFilters(self):
+    def getSources(self):
         pass
 
     def getPattern(self, filename):
         return filename.partition('_')[0]
 
     def getOutputLocation(self):
-	#TODO dynamic
-	return "/home/iris/Desktop/medidas/"
+        #TODO dynamic
+        return "/home/iris/Desktop/medidas/"

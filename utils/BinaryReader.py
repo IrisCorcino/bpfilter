@@ -9,6 +9,9 @@ class BinaryReader:
         format = '<f4' if littleEndian else '>f4'
         self.data = np.fromfile(filename, format)
 
+    def getSize(self):
+        return len(self.data)
+
     def getData(self):
         return self.data
 
