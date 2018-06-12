@@ -1,4 +1,5 @@
 import sys
+import time
 from PyQt4 import Qt
 from gnuradio import gr
 
@@ -20,7 +21,8 @@ class BaseMeasurement():
     def startMeasurement(self, index, time):
         print("measuring {}").format(self.getFrequency(index))
         self.tb.set_indice(index)
-        Qt.QThread.sleep(1)
+				
+        time.sleep(1)
         self.tb.start()
         self.tb.show()
 
