@@ -20,7 +20,7 @@ class BaseMeasurement():
     def startMeasurement(self, index, time):
         print("measuring {}").format(self.getFrequency(index))
         self.tb.set_indice(index)
-				Qt.QThread.sleep(1)
+	    Qt.QThread.sleep(1)
         self.tb.start()
         self.tb.show()
 
