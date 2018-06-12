@@ -1,5 +1,4 @@
 import sys
-from time import sleep
 from PyQt4 import Qt
 from gnuradio import gr
 
@@ -22,7 +21,6 @@ class BaseMeasurement():
         print("measuring {}").format(self.getFrequency(index))
         self.tb.set_indice(index)
 				
-        sleep(1)
         self.tb.start()
         self.tb.show()
 
