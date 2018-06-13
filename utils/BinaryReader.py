@@ -8,7 +8,7 @@ class BinaryReader:
     def readToFloat(self, filename, littleEndian = True):
         format = '<f4' if littleEndian else '>f4'
         self.data = np.fromfile(filename, format)
-        selfa.data = self.data[32768:]
+        self.data = self.data[32768:]
 
     def getSize(self):
         return len(self.data)
