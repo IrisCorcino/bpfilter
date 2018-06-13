@@ -11,7 +11,7 @@ def startMeasurement(measurement):
 
     location = sys.argv[1]
     measuringTime = int(sys.argv[2])
-    titles = ['Index', 'Frequency', 'sample count', 'Min', 'Max', 'Avg', 'Mean', 'Std']
+    titles = ['Index', 'Frequency', 'sample count', 'Min', 'Max', 'Mean', 'Std']
 
     binaryReader = BinaryReader()
     sources = measurement.getSources()
@@ -52,7 +52,7 @@ def _prepareData(context, source, firstAndLast = 20):
     frequency = context.freq
     location = context.inputloc
     reader.readToFloat(location + source + '_' + str(index) + '.bin')
-    data = [index, frequency, reader.getSize(), reader.getMin(), reader.getMax(), reader.getAvg(), reader.getMean(), reader.getStd()]
+    data = [index, frequency, reader.getSize(), reader.getMin(), reader.getMax(), reader.getMean(), reader.getStd()]
     for number in reader.getData()[:firstAndLast]:
         data.append(number)
     for number in reader.getData()[-firstAndLast:]:

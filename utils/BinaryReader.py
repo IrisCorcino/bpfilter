@@ -22,9 +22,6 @@ class BinaryReader:
     def getMax(self):
         return max(self.data)
 
-    def getAvg(self):
-        return np.average(self.data) 
-
     def getMean(self):
         return np.mean(self.data)
 
