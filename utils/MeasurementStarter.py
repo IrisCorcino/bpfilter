@@ -42,6 +42,7 @@ def _writeHeader(writers, titles):
 def _writeDataSet(context, sources, writers):
     for i, writer in enumerate(writers):
         location = context.inputloc
+        index = context.index
         source = sources[i]
         filePath = location + source + '_' + str(index) + '.bin'
         if os.path.isfile(fname):
