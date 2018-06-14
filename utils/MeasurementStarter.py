@@ -2,6 +2,7 @@ from BinaryReader import BinaryReader
 from CSVWriter import CSVWriter
 import collections
 import sys
+import os.path
 
 MeasurementContext = collections.namedtuple('MeasurementContext', ['reader', 'index', 'freq', 'inputloc', 'outputloc'])
 
@@ -40,18 +41,21 @@ def _writeHeader(writers, titles):
 
 def _writeDataSet(context, sources, writers):
     for i, writer in enumerate(writers):
-        data = _prepareData(context, sources[i])
-        _writeRow(writer, data)
+        location = context.inputloc
+        source = sources[i]
+        filePath = location + source + '_' + str(index) + '.bin'
+        if os.path.isfile(fname):
+            data = _prepareData(context, filePath)
+            _writeRow(writer, data)
 
 def _writeRow(writer, data):
     writer.writeRow(data)
 
-def _prepareData(context, source, firstAndLast = 20):
+def _prepareData(context, filePath, firstAndLast = 20):
     reader = context.reader
     index = context.index
     frequency = context.freq
-    location = context.inputloc
-    reader.readToFloat(location + source + '_' + str(index) + '.bin')
+    reader.readToFloat(filePath)
     data = [index, frequency, reader.getSize(), reader.getMin(), reader.getMax(), reader.getMean(), reader.getStd()]
     for number in reader.getData()[:firstAndLast]:
         data.append(number)
