@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Fri Jun 15 22:19:44 2018
+# Generated: Sat Jun 16 09:25:51 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -73,7 +73,7 @@ class top_block(gr.top_block, Qt.QWidget):
         self.Quadrature = Quadrature = 50e4
         self.OutputDir = OutputDir = "/home/iris/Desktop/medidas/"
         self.FreqChannel = FreqChannel = vector[indice]
-        self.FileNameSND = FileNameSND = "SND_"+str(indice)+".bin"
+        self.FileNameSND = FileNameSND = "SND_"+str(indice)+"_"+str(vector[indice])+".bin"
         self.BandWidth = BandWidth = 100e3
 
         ##################################################
@@ -205,6 +205,7 @@ class top_block(gr.top_block, Qt.QWidget):
 
     def set_vector(self, vector):
         self.vector = vector
+        self.set_FileNameSND("SND_"+str(self.indice)+"_"+str(self.vector[self.indice])+".bin")
         self.rtlsdr_source_0.set_center_freq(self.vector[self.indice], 0)
         self.set_freq_Passa_Faixa_REAL(self._freq_Passa_Faixa_REAL_formatter(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste))
         self.set_freq_Passa_Faixa(self._freq_Passa_Faixa_formatter(self.vector[self.indice+1]))
@@ -216,7 +217,7 @@ class top_block(gr.top_block, Qt.QWidget):
 
     def set_indice(self, indice):
         self.indice = indice
-        self.set_FileNameSND("SND_"+str(self.indice)+".bin")
+        self.set_FileNameSND("SND_"+str(self.indice)+"_"+str(self.vector[self.indice])+".bin")
         self.rtlsdr_source_0.set_center_freq(self.vector[self.indice], 0)
         self.set_freq_Passa_Faixa_REAL(self._freq_Passa_Faixa_REAL_formatter(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste))
         self.set_freq_Passa_Faixa(self._freq_Passa_Faixa_formatter(self.vector[self.indice+1]))

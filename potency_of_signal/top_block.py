@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Fri Jun 15 22:21:23 2018
+# Generated: Sat Jun 16 09:23:10 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -74,8 +74,8 @@ class top_block(gr.top_block, Qt.QWidget):
         self.bw = bw = 100e3
         self.Update_Interval = Update_Interval = 0.1
         self.OutputDir = OutputDir = "/home/iris/Desktop/medidas/"
-        self.FileNameCP = FileNameCP = "CP_"+str(indice)+".bin"
-        self.FileNameCAS = FileNameCAS = "CAS_"+str(indice+1)+".bin"
+        self.FileNameCP = FileNameCP = "CP_"+str(indice)+"_"+str(vector[indice])+".bin"
+        self.FileNameCAS = FileNameCAS = "CAS_"+str(indice+1)+"_"+str(vector[indice+1])+".bin"
 
         ##################################################
         # Blocks
@@ -366,6 +366,8 @@ class top_block(gr.top_block, Qt.QWidget):
 
     def set_vector(self, vector):
         self.vector = vector
+        self.set_FileNameCP("CP_"+str(self.indice)+"_"+str(self.vector[self.indice])+".bin")
+        self.set_FileNameCAS("CAS_"+str(self.indice+1)+"_"+str(self.vector[self.indice+1])+".bin")
         self.rtlsdr_source_0.set_center_freq(self.vector[self.indice], 0)
         self.qtgui_freq_sink_x_1_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
         self.qtgui_freq_sink_x_1_0.set_frequency_range(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste, self.samp_rate)
@@ -380,8 +382,8 @@ class top_block(gr.top_block, Qt.QWidget):
 
     def set_indice(self, indice):
         self.indice = indice
-        self.set_FileNameCP("CP_"+str(self.indice)+".bin")
-        self.set_FileNameCAS("CAS_"+str(self.indice+1)+".bin")
+        self.set_FileNameCP("CP_"+str(self.indice)+"_"+str(self.vector[self.indice])+".bin")
+        self.set_FileNameCAS("CAS_"+str(self.indice+1)+"_"+str(self.vector[self.indice+1])+".bin")
         self.rtlsdr_source_0.set_center_freq(self.vector[self.indice], 0)
         self.qtgui_freq_sink_x_1_1.set_frequency_range(self.vector[self.indice], self.samp_rate)
         self.qtgui_freq_sink_x_1_0.set_frequency_range(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste, self.samp_rate)

@@ -105,7 +105,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"CAS_"+str(indice+1)+".bin"</value>
+      <value>"CAS_"+str(indice+1)+"_"+str(vector[indice+1])+".bin"</value>
     </param>
   </block>
   <block>
@@ -132,7 +132,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"CP_"+str(indice)+".bin"</value>
+      <value>"CP_"+str(indice)+"_"+str(vector[indice])+".bin"</value>
     </param>
   </block>
   <block>

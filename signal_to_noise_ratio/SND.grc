@@ -168,7 +168,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"SND_"+str(indice)+".bin"</value>
+      <value>"SND_"+str(indice)+"_"+str(vector[indice])+".bin"</value>
     </param>
   </block>
   <block>
