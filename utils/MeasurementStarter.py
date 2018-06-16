@@ -45,7 +45,7 @@ def _writeDataSet(context, sources, writers):
         index = context.index
         source = sources[i]
         filePath = location + source + '_' + str(index) + '.bin'
-        if os.path.isfile(fname):
+        if os.path.isfile(filePath):
             data = _prepareData(context, filePath)
             _writeRow(writer, data)
 
