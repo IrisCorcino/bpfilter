@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Fri Jun 15 21:56:13 2018
+# Generated: Fri Jun 15 22:19:44 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -62,19 +62,19 @@ class top_block(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.indice = indice = 0
         self.vector = vector = (88.1e6,89.1e6,89.7e6,90.1e6,90.5e6,90.9e6,91.3e6,92.1e6,92.5e6,92.9e6,93.7e6,94.1e6,94.7e6,95.3e6,95.7e6,96.1e6,96.5e6,96.9e6,97.3e6,97.7e6,98.1e6,98.5e6,98.9e6,99.3e6,100.1e6,100.9e6,101.3e6,101.5e6,101.7e6,102.1e6,102.5e6,103.3e6,104.1e6,104.3e6,104.7e6,105.1e6,105.7e6,106.3e6,106.9e6,107.3e6,107.9e6)
+        self.indice = indice = 0
         self.ajuste = ajuste = 0
-        self.FileNameSND = FileNameSND = "SND_"+str(indice)+".bin"
         self.samp_rate = samp_rate = 2.4e6
         self.rfgain = rfgain = 70
         self.freq_Passa_Faixa_REAL = freq_Passa_Faixa_REAL = vector[indice]+ (vector[indice +  1]- vector[indice]) + ajuste
         self.freq_Passa_Faixa = freq_Passa_Faixa = vector[indice+1]
         self.Update_Interval = Update_Interval = 0.1
         self.Quadrature = Quadrature = 50e4
+        self.OutputDir = OutputDir = "/home/iris/Desktop/medidas/"
         self.FreqChannel = FreqChannel = vector[indice]
+        self.FileNameSND = FileNameSND = "SND_"+str(indice)+".bin"
         self.BandWidth = BandWidth = 100e3
-        self.AddressSNR = AddressSNR = "/home/iris/Desktop/medidas/"+ FileNameSND
 
         ##################################################
         # Blocks
@@ -133,7 +133,7 @@ class top_block(gr.top_block, Qt.QWidget):
         self.blocks_rms_xx_1 = blocks.rms_cf(0.0001)
         self.blocks_rms_xx_0 = blocks.rms_cf(0.0001)
         self.blocks_nlog10_ff_0_1_0 = blocks.nlog10_ff(20, 1, 1)
-        self.blocks_file_sink_1_0 = blocks.file_sink(gr.sizeof_float*1, AddressSNR, False)
+        self.blocks_file_sink_1_0 = blocks.file_sink(gr.sizeof_float*1, OutputDir + FileNameSND, False)
         self.blocks_file_sink_1_0.set_unbuffered(False)
         self.blocks_divide_xx_0 = blocks.divide_ff(1)
         self.band_pass_filter = filter.fir_filter_ccf(12, firdes.band_pass(
@@ -200,23 +200,23 @@ class top_block(gr.top_block, Qt.QWidget):
         self.settings.setValue("geometry", self.saveGeometry())
         event.accept()
 
-    def get_indice(self):
-        return self.indice
-
-    def set_indice(self, indice):
-        self.indice = indice
-        self.rtlsdr_source_0.set_center_freq(self.vector[self.indice], 0)
-        self.set_freq_Passa_Faixa_REAL(self._freq_Passa_Faixa_REAL_formatter(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste))
-        self.set_freq_Passa_Faixa(self._freq_Passa_Faixa_formatter(self.vector[self.indice+1]))
-        self.band_pass_filter.set_taps(firdes.band_pass(2, self.samp_rate, (self.vector[self.indice+1] -self.vector[self.indice])-self.BandWidth+ self.ajuste, (self.vector[self.indice+1] -self.vector[self.indice])+self.BandWidth+ self.ajuste, 10e3, firdes.WIN_HAMMING, 6.76))
-        self.set_FreqChannel(self._FreqChannel_formatter(self.vector[self.indice]))
-        self.set_FileNameSND("SND_"+str(self.indice)+".bin")
-
     def get_vector(self):
         return self.vector
 
     def set_vector(self, vector):
         self.vector = vector
+        self.rtlsdr_source_0.set_center_freq(self.vector[self.indice], 0)
+        self.set_freq_Passa_Faixa_REAL(self._freq_Passa_Faixa_REAL_formatter(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste))
+        self.set_freq_Passa_Faixa(self._freq_Passa_Faixa_formatter(self.vector[self.indice+1]))
+        self.band_pass_filter.set_taps(firdes.band_pass(2, self.samp_rate, (self.vector[self.indice+1] -self.vector[self.indice])-self.BandWidth+ self.ajuste, (self.vector[self.indice+1] -self.vector[self.indice])+self.BandWidth+ self.ajuste, 10e3, firdes.WIN_HAMMING, 6.76))
+        self.set_FreqChannel(self._FreqChannel_formatter(self.vector[self.indice]))
+
+    def get_indice(self):
+        return self.indice
+
+    def set_indice(self, indice):
+        self.indice = indice
+        self.set_FileNameSND("SND_"+str(self.indice)+".bin")
         self.rtlsdr_source_0.set_center_freq(self.vector[self.indice], 0)
         self.set_freq_Passa_Faixa_REAL(self._freq_Passa_Faixa_REAL_formatter(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste))
         self.set_freq_Passa_Faixa(self._freq_Passa_Faixa_formatter(self.vector[self.indice+1]))
@@ -230,13 +230,6 @@ class top_block(gr.top_block, Qt.QWidget):
         self.ajuste = ajuste
         self.set_freq_Passa_Faixa_REAL(self._freq_Passa_Faixa_REAL_formatter(self.vector[self.indice]+ (self.vector[self.indice +  1]- self.vector[self.indice]) + self.ajuste))
         self.band_pass_filter.set_taps(firdes.band_pass(2, self.samp_rate, (self.vector[self.indice+1] -self.vector[self.indice])-self.BandWidth+ self.ajuste, (self.vector[self.indice+1] -self.vector[self.indice])+self.BandWidth+ self.ajuste, 10e3, firdes.WIN_HAMMING, 6.76))
-
-    def get_FileNameSND(self):
-        return self.FileNameSND
-
-    def set_FileNameSND(self, FileNameSND):
-        self.FileNameSND = FileNameSND
-        self.set_AddressSNR("/home/iris/Desktop/medidas/"+ self.FileNameSND)
 
     def get_samp_rate(self):
         return self.samp_rate
@@ -281,6 +274,13 @@ class top_block(gr.top_block, Qt.QWidget):
     def set_Quadrature(self, Quadrature):
         self.Quadrature = Quadrature
 
+    def get_OutputDir(self):
+        return self.OutputDir
+
+    def set_OutputDir(self, OutputDir):
+        self.OutputDir = OutputDir
+        self.blocks_file_sink_1_0.open(self.OutputDir + self.FileNameSND)
+
     def get_FreqChannel(self):
         return self.FreqChannel
 
@@ -288,19 +288,19 @@ class top_block(gr.top_block, Qt.QWidget):
         self.FreqChannel = FreqChannel
         Qt.QMetaObject.invokeMethod(self._FreqChannel_label, "setText", Qt.Q_ARG("QString", self.FreqChannel))
 
+    def get_FileNameSND(self):
+        return self.FileNameSND
+
+    def set_FileNameSND(self, FileNameSND):
+        self.FileNameSND = FileNameSND
+        self.blocks_file_sink_1_0.open(self.OutputDir + self.FileNameSND)
+
     def get_BandWidth(self):
         return self.BandWidth
 
     def set_BandWidth(self, BandWidth):
         self.BandWidth = BandWidth
         self.band_pass_filter.set_taps(firdes.band_pass(2, self.samp_rate, (self.vector[self.indice+1] -self.vector[self.indice])-self.BandWidth+ self.ajuste, (self.vector[self.indice+1] -self.vector[self.indice])+self.BandWidth+ self.ajuste, 10e3, firdes.WIN_HAMMING, 6.76))
-
-    def get_AddressSNR(self):
-        return self.AddressSNR
-
-    def set_AddressSNR(self, AddressSNR):
-        self.AddressSNR = AddressSNR
-        self.blocks_file_sink_1_0.open(self.AddressSNR)
 
 
 def main(top_block_cls=top_block, options=None):
