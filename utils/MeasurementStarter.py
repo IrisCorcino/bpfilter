@@ -5,7 +5,7 @@ from FileModificationChecker import FileModificationChecker
 
 class MeasurementStarter():
     
-    def __init__(measurement):
+    def __init__(self, measurement):
         if len(sys.argv) != 4:
             raise Exception('incorrect number of arguments')
         self.measurement = measurement
