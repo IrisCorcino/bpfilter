@@ -156,7 +156,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(896, 100)</value>
+      <value>(968, 100)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -212,6 +212,33 @@
     <param>
       <key>type</key>
       <value>real</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(744, 108)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>OutputDir</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>"/home/iris/Desktop/medidas/"</value>
     </param>
   </block>
   <block>
@@ -567,7 +594,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>3e6</value>
+      <value>2.4e6</value>
     </param>
   </block>
   <block>
@@ -982,7 +1009,7 @@
     </param>
     <param>
       <key>file</key>
-      <value>"/home/iris/Desktop/medidas/"+ FileNameSND</value>
+      <value>OutputDir + FileNameSND</value>
     </param>
     <param>
       <key>_coordinate</key>
