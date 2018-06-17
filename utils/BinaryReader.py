@@ -5,32 +5,7 @@ class BinaryReader:
     def __init__(self, littleEndian = True):
         self.format = '<f4' if littleEndian else '>f4'
 
-<<<<<<< HEAD
     def readToFloat(self, filename, skip):
         data = np.fromfile(filename, self.format)
         data = data[skip:]
         return list(data)
-=======
-    def readToFloat(self, filename, littleEndian = True):
-        format = '<f4' if littleEndian else '>f4'
-        self.data = np.fromfile(filename, format)
-        self.data = self.data[200000:]
-
-    def getSize(self):
-        return len(self.data)
-
-    def getData(self):
-        return self.data
-
-    def getMin(self):
-        return min(self.data)
-
-    def getMax(self):
-        return max(self.data)
-
-    def getMean(self):
-        return np.mean(self.data)
-
-    def getStd(self):
-        return np.std(self.data)
->>>>>>> aff250705607bd29352a3246f6af90569d9e633d
