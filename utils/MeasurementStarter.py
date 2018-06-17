@@ -1,8 +1,6 @@
 import collections
 import sys
 import os.path
-<<<<<<< HEAD
-from os import listdir
 from FileModificationChecker import FileModificationChecker
 
 class MeasurementStarter():
