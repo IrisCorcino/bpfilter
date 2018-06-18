@@ -95,14 +95,14 @@ case "$1" in
   INPUT_DIR=$4
   FILE_PATTERN1=$5
   if [ $# -eq 5 ]; then
-    python2 ./utils/MeasurementPlotter.py $PLOTTER $OUTPUT_DIR $INPUT_DIR $FILE_PATTERN1
+    python2 ./src/MeasurementPlotter.py $PLOTTER $OUTPUT_DIR $INPUT_DIR $FILE_PATTERN1
   elif [ $# -eq 5  ]; then
     FILE_PATTERN2=$6
-    python2 ./utils/MeasurementPlotter.py $PLOTTER $OUTPUT_DIR $INPUT_DIR $FILE_PATTERN1 $FILE_PATTERN2
+    python2 ./src/MeasurementPlotter.py $PLOTTER $OUTPUT_DIR $INPUT_DIR $FILE_PATTERN1 $FILE_PATTERN2
   else
     FILE_PATTERN2=$6
     FILE_PATTERN3=$7
-    python2 ./utils/MeasurementPlotter.py $PLOTTER $OUTPUT_DIR $INPUT_DIR $FILE_PATTERN1 $FILE_PATTERN2 $FILE_PATTERN3
+    python2 ./src/MeasurementPlotter.py $PLOTTER $OUTPUT_DIR $INPUT_DIR $FILE_PATTERN1 $FILE_PATTERN2 $FILE_PATTERN3
   fi
   exit 0
   ;;
