@@ -8,6 +8,7 @@ RUN apt-get install -y \
 	python-pip \
 	python2.7 \
 	python2.7-dev \
+	python-matplotlib \
 	cmake \
 	libusb-1.0.0 \
 	libusb-1.0-0.dev \
