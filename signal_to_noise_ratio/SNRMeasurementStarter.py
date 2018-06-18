@@ -1,5 +1,5 @@
 import sys
-sys.path.append(sys.path[0] + '/../utils/')
+sys.path.append(sys.path[0] + '/../src/')
 from Measurement import Measurement
 from MeasurementStarter import MeasurementStarter
 from top_block import top_block
