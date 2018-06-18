@@ -30,7 +30,6 @@ class MeasurementPlotter():
         measurementResult = []
         for i,filePattern in enumerate(self.filePatterns):
             files = self.getFilesWithPattern(filePattern)
-            print "INPUT FILES2 = ", files
             measurementEntryList = []
             for filename in files:
                 measurementEntryList.append(MeasurementEntry.createEntry(self.inputDir, filename))
@@ -44,7 +43,6 @@ class MeasurementPlotter():
     def getFilesWithPattern(self, filePattern):
         files = os.listdir(self.inputDir)
         inputFiles = list(filter(lambda x: x.split('_')[0] == filePattern, files))
-        print "INPUT FILES = ", inputFiles
         return inputFiles
 
 if __name__ == '__main__':

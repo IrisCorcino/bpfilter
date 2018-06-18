@@ -39,12 +39,14 @@ class CSVPlotter(BasePlotter):
         index = measurementEntry.index
         freq = measurementEntry.frequency
         data = measurementEntry.data
+        size = MeasurementStatistics.getSize(data)
         minV = MeasurementStatistics.getMin(data)
         maxV = MeasurementStatistics.getMax(data)
         mean = MeasurementStatistics.getMean(data)
         std = MeasurementStatistics.getStd(data)
         firstAndLast20 = MeasurementStatistics.getFirstAndLast(data, 20)
-        d = [index, freq, minV, maxV, mean, std, firstAndLast20]
+        d = [index, freq, size, minV, maxV, mean, std]
+        d.extend(firstAndLast20)
         writer.writeRow(d)
 
     def _closeWriters(self):
