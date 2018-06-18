@@ -1,7 +1,7 @@
 from BinaryReader import BinaryReader
 
 class MeasurementEntry():
-    SKIP_SAMPLES = 32768
+    SKIP_SAMPLES = 70000
     binaryReader = BinaryReader()
 
     def __init__(self, index, frequency, data):

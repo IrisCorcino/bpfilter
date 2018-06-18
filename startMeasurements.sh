@@ -10,7 +10,7 @@ print_info_and_exit() {
   echo "   PLOTTER" >&2
   echo "      0 - CSV" >&2
   echo "      1 - DIAGRAM" >&2
-  echo "      1 - DIFF DIAGRAM" >&2
+  echo "      2 - DIFF DIAGRAM" >&2
   exit 1
 }
 
@@ -54,7 +54,7 @@ case "$1" in
     python2 ./signal_to_noise_ratio/SNRMeasurementStarter.py $OUTPUT_DIR $MEASUREMENT_IN_SEC  
     ;;
   "2")
-    python2 ./potency_of_signal/SNRMeasurementStarter.py $OUTPUT_DIR $MEASUREMENT_IN_SEC 
+    python2 ./potency_of_signal/PSMeasurementStarter.py $OUTPUT_DIR $MEASUREMENT_IN_SEC 
     ;;
   *)
     print_info_and_exit

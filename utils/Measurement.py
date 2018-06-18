@@ -12,7 +12,7 @@ class Measurement():
             Qt.QApplication.setGraphicsSystem(style)
         self.qapp = Qt.QApplication(sys.argv)
         self.tb = topBlock()
-        self.outputLocation = self.tb.get_OutputDir()
+        self.outputDir = self.tb.get_OutputDir()
 
     def getSize(self):
         return len(self.tb.vector)
@@ -28,7 +28,7 @@ class Measurement():
 
     def setOutputLocation(self, outputLocation):
         self.tb.set_OutputDir(outputLocation)
-        self.outputLocation = outputLocation
+        self.outputDir = outputLocation
     
     def getOutputLocation(self):
-        return self.outputLocation
+        return self.outputDir

@@ -6,15 +6,15 @@ from FileModificationChecker import FileModificationChecker
 class MeasurementStarter():
     
     def __init__(self, measurement):
-        if len(sys.argv) != 4:
+        if len(sys.argv) != 3:
             raise Exception('incorrect number of arguments')
         self.measurement = measurement
         self.measurement.setOutputLocation(sys.argv[1])
-        self.measuringTime = sys.argv[2]
+        self.measuringTime = int(sys.argv[2])
+        self.outputDir = self.measurement.getOutputLocation()
         self.fileModificationChecker = FileModificationChecker(self.outputDir)
 
     def start(self):
-        outputDir = self.measurement.getOutputLocation()
-        for index in xrange(0, measurement.getSize()-1):
-            measurement.startMeasurement(index,self.measuringTime)
+        for index in xrange(0, self.measurement.getSize()-1):
+            self.measurement.startMeasurement(index,self.measuringTime)
         self.fileModificationChecker.printModifiedFiles()
