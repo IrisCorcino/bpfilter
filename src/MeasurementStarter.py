@@ -13,7 +13,7 @@ class MeasurementStarter():
         self.measuringTime = int(sys.argv[2])
         self.outputDir = self.measurement.getOutputLocation()
         self.fileModificationChecker = FileModificationChecker(self.outputDir)
-        if len(sys.argv == 3:
+        if len(sys.argv) == 3:
             self.startIndex = 0
             self.endIndex = self.measurement.getSize()
         elif len(sys.argv) == 4:
@@ -27,13 +27,13 @@ class MeasurementStarter():
 
     def _getStartIndexFromArgv(self):
         startIndex = int(sys.argv[3])
-        if startIndex < 0 or startIndex > endIndex:
+        if startIndex < 0 or startIndex > self.measurement.getSize():
             raise Exception('illegal start index')    
         return startIndex
 
     def _getEndIndexFromArgv(self):
-        endIndex = int(sys.argv[4])
-        if endInex > self.measurement.getSize():
+        endIndex = int(sys.argv[4]) + 1
+        if endIndex > self.measurement.getSize():
             raise Exception('illegal end index')
         return endIndex
 

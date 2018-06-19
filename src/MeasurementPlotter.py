@@ -3,12 +3,14 @@ import os
 from CSVPlotter import CSVPlotter
 from DiagramPlotter import DiagramPlotter
 from DiffDiagramPlotter import DiffDiagramPlotter
+from DiffSampleDiagramPlotter import DiffSampleDiagramPlotter
 from MeasurementEntry import MeasurementEntry
 from FileModificationChecker import FileModificationChecker
 
 PLOTTER_CSV = 0
 PLOTTER_DIAGRAM = 1
 PLOTTER_DIFF_DIAGRAM = 2
+PLOTTER_DIFF_SAMPLE = 3
 
 class MeasurementPlotter():
 
@@ -19,6 +21,8 @@ class MeasurementPlotter():
             self.plotter = DiagramPlotter(outputDir)
         elif plotterID == PLOTTER_DIFF_DIAGRAM:
             self.plotter = DiffDiagramPlotter(outputDir)
+        elif plotterID == PLOTTER_DIFF_SAMPLE:
+            self.plotter = DiffSampleDiagramPlotter(outputDir)
         else:
             raise Exception('plotter with id ', plotterID, ' does not exist')
         self.outputDir = outputDir

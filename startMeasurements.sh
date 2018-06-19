@@ -11,6 +11,7 @@ print_info_and_exit() {
   echo "      0 - CSV" >&2
   echo "      1 - DIAGRAM" >&2
   echo "      2 - DIFF DIAGRAM" >&2
+  echo "      3 - DIFF_SAMPLE" >&2
   echo "   FILE_PATTERN" >&2
   echo "      for <name>_<id>_<freq>.bin the FILE_PATTERN is <name>" >&2
   exit 1
@@ -30,8 +31,8 @@ check_if_existing_directory() {
   fi
 }
 
-SETUP_DIR1="~/pybombs/prefix/default/setup_env.sh"
-SETUP_DIR2="~/pybombs/prefix/setup_env.sh"
+SETUP_DIR1=~/pybombs/prefix/default/setup_env.sh
+SETUP_DIR2=~/pybombs/prefix/setup_env.sh
 if [ -f $SETUP_DIR1 ]; then
 		source $SETUP_DIR1
 else
